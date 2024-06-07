@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GeoFS Camera Reset
 // @version      1.0
-// @description  Reset GeoFS camera when Shift+C is pressed
+// @description  Reset GeoFS camera when middle mouse button is pressed
 // @author       krunchiekrunch
 // @match        https://www.geo-fs.com/geofs.php?v=*
 // @match        https://*.geo-fs.com/geofs.php*
