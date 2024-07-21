@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GeoFS Camera Reset
-// @version      1.0
-// @description  Reset GeoFS camera when middle mouse button is pressed
+// @version      1.1
+// @description  Reset GeoFS camera when middle mouse button is double-clicked
 // @author       krunchiekrunch
 // @match        https://www.geo-fs.com/geofs.php?v=*
 // @match        https://*.geo-fs.com/geofs.php*
@@ -12,12 +12,24 @@
 (function() {
     'use strict';
 
-    // detect when middle mouse button is pressed
+    let clickCount = 0;
+    const clickDelay = 300; // maximum time (ms) between clicks to be considered a double click
+    let clickTimer;
+
     document.addEventListener('mousedown', function(event) {
         if (event.button === 1) {
-            // reset camera
-            if (typeof geofs !== 'undefined' && geofs.camera && typeof geofs.camera.reset === 'function') {
-                geofs.camera.reset();
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(function() {
+                    clickCount = 0;
+                }, clickDelay);
+            } else if (clickCount === 2) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                // reset camera
+                if (typeof geofs !== 'undefined' && geofs.camera && typeof geofs.camera.reset === 'function') {
+                    geofs.camera.reset();
+                }
             }
         }
     }, false);
